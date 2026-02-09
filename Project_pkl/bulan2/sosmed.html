@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+  <link rel="icon" type="img/png" href="../img/home.jpg">
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body{
+      background:#f4f6f8;
+      height:100vh;
+      overflow:hidden;
+    }
+
+    .app{
+      display:flex;
+      height:100vh;
+    }
+
+    /* SIDEBAR LOCK */
+    .sidebar{
+      position:fixed;
+      top:0;
+      left:0;
+      width:200px;
+      height:100vh;
+      background:#ffffff;
+      padding:20px;
+      box-shadow:2px 0 10px rgba(0,0,0,0.05);
+    }
+
+    .sidebar h2{
+      margin-bottom:20px;
+    }
+
+    .sidebar a{
+      display:block;
+      color:#333;
+      text-decoration:none;
+      margin-bottom:12px;
+    }
+
+    /* MAIN BISA SCROLL */
+    .main{
+      margin-left:200px; /* ngasih ruang buat sidebar */
+      flex:1;
+      padding:25px;
+      height:100vh;
+      overflow-y:auto;
+    }
+
+    /* BANNER VIDEO */
+    .banner{
+      position:relative;
+      height:260px;
+      border-radius:12px;
+      overflow:hidden;
+      margin-bottom:20px;
+    }
+
+    .banner video{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .banner::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,0.5);
+    }
+
+    .banner-text{
+      position:relative;
+      z-index:1;
+      color:#fff;
+      padding:30px;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+      gap:15px;
+      padding:10px;
+    }
+
+    .card{
+      background:white;
+      padding:15px;
+      border-radius:10px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.05);
+      text-align:center;
+    }
+
+    .card a{
+    text-decoration:none;
+    color:#333;
+    display:block;
+    width:100%;
+    height:100%;
+    }
+
+    .card:hover{
+      transform: translateY(-4px);
+      transition: 0.2s;
+      background:#f0f8ff;
+    }
+
+    /* FOOTER SIDEBAR */
+    .sidebar-footer{
+      position:absolute;
+      bottom:15px;
+      left:20px;
+      font-size:12px;
+      color:#888;
+    }
+
+    .sidebar a.active{
+      background:#0bcaff4e;
+      border:1px solid #00b4e6;
+      padding:5px 10px;
+      border-radius:10px;
+    }
+
+    .section-title {
+  margin-bottom: 15px;
+}
+
+.cards {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 160px;
+  padding: 20px;
+  text-align: center;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.card img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.card a {
+  display: block;
+  text-decoration: none;
+  font-weight: 600;
+  color: #333;
+}
+
+.card a:hover {
+  color: #007bff;
+}
+
+  </style>
+</head>
+
+<body>
+  <div class="app">
+
+    <!-- SIDEBAR (TETAP DI TEMPAT) -->
+    <div class="sidebar">
+  <h2>Dashboard</h2>
+
+     <a href="../bulan2/dashboard.html" >Dashboard</a>
+      <a href="../bulan1/Biodata.html">Bio data</a>
+      <a href="../bulan2/script.html">Table</a>
+      <a href="../bulan2/sosmed.html"class="active">Sosmed</a>
+
+  <!-- FOOTER SIDEBAR -->
+  <div class="sidebar-footer">
+    © 2026
+    Project PKL RPL
+  </div>
+</div>
+
+
+    <!-- MAIN (BISA SCROLL) -->
+    <div class="main">
+
+      <div class="banner">
+        <video autoplay muted loop>
+          <source src="../video/sosmed.mp4" type="video/mp4">
+        </video>
+        <div class="banner-text">
+          <h1>Social Media</h1>
+          <p></p>
+        </div>
+      </div>
+
+     <h3 class="section-title">Social Media</h3>
+
+<div class="cards">
+  <div class="card">
+    <img src="../img/facebook.png" alt="Facebook">
+    <a href="https://www.facebook.com/yourprofile" target="_blank">Facebook</a>
+  </div>
+
+  <div class="card">
+    <img src="../img/twitter.png" alt="Twitter">
+    <a href="https://www.twitter.com/yourprofile" target="_blank">Twitter</a>
+  </div>
+
+  <div class="card">
+    <img src="../img/instagram.png" alt="Instagram">
+    <a href="https://www.instagram.com/yourprofile" target="_blank">Instagram</a>
+  </div>
+
+  <div class="card">
+    <img src="../img/tiktok.png" alt="TikTok">
+    <a href="https://www.tiktok.com/@yourprofile" target="_blank">TikTok</a>
+  </div>
+  
+<div class="card">
+    <img src="../img/whatssapp.png" alt="WhatsApp">
+    <a href="https://wa.me/yourphonenumber" target="_blank">WhatsApp</a>
+ </div>
+
+
+
+        </div>
+      </div>
+    </body>
+</html>
