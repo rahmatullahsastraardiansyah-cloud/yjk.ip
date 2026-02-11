@@ -292,6 +292,17 @@ function hapus(){
   render();
 }
 
+// SIMPAN PERUBAHAN
+function save(){
+  if(indexDipilih === null) return alert("Pilih baris terlebih dahulu");
+
+  alert("Perubahan disimpan!");
+}
+
+// MENAMPILKAN DATA
+function tampilkanData(){
+  console.log(data);
+}
 
 // JALANKAN AWAL
 render();
