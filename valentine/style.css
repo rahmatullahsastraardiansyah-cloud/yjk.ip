@@ -1,0 +1,92 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  height: 100vh;
+  background: url("valentine.jpg") no-repeat center center;
+  background-size: cover;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container {
+  text-align: center;
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.title {
+  font-size: 32px;
+  color: #ff4d6d;
+}
+
+.subtitle {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.buttons button {
+  padding: 12px 25px;
+  margin: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#yesBtn {
+  background: #ff4d6d;
+  color: white;
+}
+
+#yesBtn:hover {
+  background: #ff1e4d;
+  transform: scale(1.1);
+}
+
+#noBtn {
+  background: #555;
+  color: white;
+}
+
+#noBtn:hover {
+  background: black;
+}
+
+#result {
+  margin-top: 20px;
+  font-size: 22px;
+  color: #ff4d6d;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+#result.show {
+  opacity: 1;
+}
+
+/* Animasi fade */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Love animation */
+.hearts::before,
+.hearts::after {
+  position: absolute;
+  width: 100%;
+  top: -50px;
+  font-size: 24px;
+  animation: fall 10s linear infinite;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-10%); }
+  100% { transform: translateY(110vh); }
+}
