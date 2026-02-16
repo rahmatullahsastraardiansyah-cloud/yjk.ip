@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raizen ID - Joki Website & Desain</title>
+
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div id="particles-js"></div>
+
+<button class="toggle-mode" onclick="toggleMode()">🌙</button>
+
+<div class="container">
+
+<header data-aos="fade-down">
+<img src="blob (2).png" alt="Logo Raizen ID" class="logo">
+<h1>RAIZEN ID</h1>
+<p>Website Developer & Designer</p>
+</header>
+
+<section class="hero" data-aos="fade-up">
+<h2>JOKI WEBSITE & DESAIN</h2>
+<p>Harga mulai dari <strong>Rp 50.000</strong></p>
+</section>
+
+<section class="services">
+
+<div class="card" onclick="selectService(event,'Desain Logo',50000)" data-aos="zoom-in">
+Desain Logo <br><strong>Rp 50.000</strong>
+</div>
+
+<div class="card" onclick="selectService(event,'Desain Website',150000)" data-aos="zoom-in">
+Desain Website <br><strong>Rp 150.000</strong>
+</div>
+
+<div class="card" onclick="selectService(event,'Desain Konten Media Sosial',75000)" data-aos="zoom-in">
+Desain Konten Sosial Media <br><strong>Rp 75.000</strong>
+</div>
+
+<div class="card" onclick="selectService(event,'Desain Kemasan Produk',100000)" data-aos="zoom-in">
+Desain Kemasan Produk <br><strong>Rp 100.000</strong>
+</div>
+
+</section>
+
+<section class="order-box glass" data-aos="fade-up">
+
+<h3>Form Order</h3>
+
+<label>Metode Pembayaran</label>
+<select id="payment">
+<option>Dana</option>
+<option>OVO</option>
+<option>Gopay</option>
+<option>Transfer Bank</option>
+</select>
+
+<label>Upload Bukti Pembayaran</label>
+<input type="file" id="proof" accept="image/*">
+<img id="preview" class="preview">
+
+<h4>Total: Rp <span id="total">0</span></h4>
+<a href="../Project_pkl/bulan2/dashboard.html">
+    <button>Kembali</button>
+</a>
+<button onclick="orderNow()">ORDER SEKARANG</button>
+
+</section>
+
+<footer data-aos="fade-up">
+Durasi Pengerjaan: 1-2 Hari Kerja <br>
+Hubungi: 0858-4743-9679 <br>
+raizenid18@gmail.com
+</footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
