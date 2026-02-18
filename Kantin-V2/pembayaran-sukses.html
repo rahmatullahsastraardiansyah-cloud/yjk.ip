@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembayaran Berhasil - Kantin Online</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .success-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+            padding: 20px;
+        }
+        
+        .success-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 50px;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: var(--shadow-xl);
+            animation: fadeIn 0.6s ease;
+        }
+        
+        .success-icon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            animation: scaleIn 0.5s ease;
+        }
+        
+        .success-icon i {
+            font-size: 4rem;
+            color: white;
+        }
+        
+        @keyframes scaleIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .order-number {
+            background: #F0FDF4;
+            border: 2px dashed var(--success);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin: 25px 0;
+        }
+        
+        .order-number h3 {
+            color: var(--success);
+            font-weight: 800;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-page">
+        <div class="success-card">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            
+            <h2 class="mb-2">Pembayaran Berhasil!</h2>
+            <p class="text-muted mb-4">Terima kasih telah melakukan pembayaran. Pesanan Anda sedang diproses.</p>
+            
+            <div class="order-number">
+                <small class="text-muted d-block mb-1">Nomor Pesanan</small>
+                <h3 id="orderNumber">-</h3>
+            </div>
+            
+            <div class="mb-4">
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Metode Pembayaran</span>
+                    <span class="fw-bold" id="paymentMethod">-</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span class="text-muted">Total Bayar</span>
+                    <span class="fw-bold text-primary" id="totalAmount">-</span>
+                </div>
+            </div>
+            
+            <div class="alert alert-info mb-4">
+                <i class="fas fa-info-circle me-2"></i>
+                <small>Silakan tunjukkan nomor pesanan ini saat mengambil pesanan di kantin.</small>
+            </div>
+            
+            <div class="d-grid gap-2">
+                <a href="riwayat.html" class="btn btn-primary btn-lg">
+                    <i class="fas fa-receipt me-2"></i>Lihat Riwayat
+                </a>
+                <a href="index.html" class="btn btn-outline-secondary">
+                    <i class="fas fa-home me-2"></i>Kembali ke Beranda
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        DB.init();
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = parseInt(urlParams.get('order'));
+        
+        if (!orderId) {
+            window.location.href = 'index.html';
+        }
+        
+        const pesanan = DB.getPesanan().find(p => p.id === orderId);
+        
+        if (!pesanan) {
+            window.location.href = 'index.html';
+        }
+        
+        const methodNames = {
+            'saldo': 'Saldo',
+            'dana': 'DANA',
+            'ovo': 'OVO',
+            'gopay': 'GoPay',
+            'shopeepay': 'ShopeePay',
+            'linkaja': 'LinkAja',
+            'qris': 'QRIS',
+            'bca': 'Bank BCA',
+            'bni': 'Bank BNI',
+            'mandiri': 'Bank Mandiri',
+            'cash': 'Bayar di Tempat'
+        };
+        
+        document.getElementById('orderNumber').textContent = generateOrderNumber(pesanan.id);
+        document.getElementById('paymentMethod').textContent = methodNames[pesanan.metode_pembayaran] || pesanan.metode_pembayaran;
+        document.getElementById('totalAmount').textContent = rupiah(pesanan.total_harga);
+    </script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil - Kantin Online</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-utensils"></i>
+                Kantin Online
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="menu.html"><i class="fas fa-list"></i> Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="riwayat.html"><i class="fas fa-history"></i> Riwayat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="profil.html"><i class="fas fa-user"></i> Profil</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <button onclick="logout()" class="btn btn-outline-light">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="py-4" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white;">
+        <div class="container">
+            <h2 class="mb-0"><i class="fas fa-user me-2"></i>Profil Saya</h2>
+            <p class="mb-0 opacity-75">Kelola informasi akunmu</p>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <section class="py-5">
+        <div class="container">
+            <div id="alert-container"></div>
+
+            <div class="row g-4">
+                <!-- Profil Card -->
+                <div class="col-lg-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.nama)}&size=150&background=FF6B35&color=fff" 
+                                     alt="${currentUser.nama}" 
+                                     class="rounded-circle"
+                                     style="width: 150px; height: 150px; object-fit: cover;"
+                                     id="userAvatar">
+                            </div>
+                            <h4 id="userName">-</h4>
+                            <p class="text-muted" id="userEmail">-</p>
+                            <span class="badge bg-primary" id="userRole">-</span>
+                            
+                            <div class="mt-4">
+                                <a href="edit-profil.html" class="btn btn-primary w-100">
+                                    <i class="fas fa-edit me-2"></i>Edit Profil
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Statistik -->
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <h6 class="mb-3"><i class="fas fa-chart-bar me-2"></i>Statistik</h6>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Total Pesanan</span>
+                                <span class="fw-bold" id="totalPesanan">0</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>Total Pengeluaran</span>
+                                <span class="fw-bold text-primary" id="totalPengeluaran">Rp 0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detail Profil -->
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Informasi Akun</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td width="30%"><i class="fas fa-user me-2 text-primary"></i>Nama</td>
+                                    <td>: <span id="detailName">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fas fa-envelope me-2 text-primary"></i>Email</td>
+                                    <td>: <span id="detailEmail">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fas fa-phone me-2 text-primary"></i>No. HP</td>
+                                    <td>: <span id="detailPhone">-</span></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fas fa-wallet me-2 text-primary"></i>Saldo</td>
+                                    <td>: <span class="fw-bold text-success" id="detailSaldo">Rp 0</span></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fas fa-calendar me-2 text-primary"></i>Bergabung</td>
+                                    <td>: <span id="detailJoin">-</span></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Menu Cepat -->
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-bolt me-2"></i>Menu Cepat</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <a href="topup.html" class="btn btn-outline-primary w-100 py-3">
+                                        <i class="fas fa-plus-circle fa-2x mb-2 d-block"></i>
+                                        Topup Saldo
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="riwayat.html" class="btn btn-outline-success w-100 py-3">
+                                        <i class="fas fa-history fa-2x mb-2 d-block"></i>
+                                        Riwayat Pesanan
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="keranjang.html" class="btn btn-outline-warning w-100 py-3">
+                                        <i class="fas fa-shopping-cart fa-2x mb-2 d-block"></i>
+                                        Keranjang
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="menu.html" class="btn btn-outline-info w-100 py-3">
+                                        <i class="fas fa-utensils fa-2x mb-2 d-block"></i>
+                                        Lihat Menu
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 Kantin Online. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        // Check auth
+        if (!Auth.isLoggedIn()) {
+            window.location.href = 'login.html';
+        }
+        
+        DB.init();
+        let currentUser = Auth.getCurrentUser();
+        
+        // Render profil
+        function renderProfil() {
+            // Refresh user data
+            currentUser = DB.getUser(currentUser.id);
+            Auth.setCurrentUser(currentUser);
+            
+            // Basic info
+            document.getElementById('userName').textContent = currentUser.nama;
+            document.getElementById('userEmail').textContent = currentUser.email;
+            document.getElementById('userRole').textContent = currentUser.role === 'admin' ? 'Administrator' : 'Pengguna';
+            document.getElementById('userAvatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.nama)}&size=150&background=FF6B35&color=fff`;
+            
+            // Detail
+            document.getElementById('detailName').textContent = currentUser.nama;
+            document.getElementById('detailEmail').textContent = currentUser.email;
+            document.getElementById('detailPhone').textContent = currentUser.no_hp || '-';
+            document.getElementById('detailSaldo').textContent = rupiah(currentUser.saldo);
+            document.getElementById('detailJoin').textContent = tanggal(currentUser.created_at);
+            
+            // Statistik
+            const pesanan = DB.getPesanan(currentUser.id);
+            const totalPengeluaran = pesanan
+                .filter(p => p.status !== 'dibatalkan')
+                .reduce((sum, p) => sum + p.total_harga, 0);
+            
+            document.getElementById('totalPesanan').textContent = pesanan.length;
+            document.getElementById('totalPengeluaran').textContent = rupiah(totalPengeluaran);
+        }
+        
+        // Logout
+        function logout() {
+            Auth.logout();
+        }
+        
+        // Initialize
+        renderProfil();
+    </script>
+</body>
+</html>

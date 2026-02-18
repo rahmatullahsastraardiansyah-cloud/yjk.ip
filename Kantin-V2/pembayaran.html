@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembayaran - Kantin Online</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-utensils"></i>
+                Kantin Online
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="menu.html"><i class="fas fa-list"></i> Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="riwayat.html"><i class="fas fa-history"></i> Riwayat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profil.html"><i class="fas fa-user"></i> Profil</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <button onclick="logout()" class="btn btn-outline-light">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="py-4" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white;">
+        <div class="container">
+            <h2 class="mb-0"><i class="fas fa-credit-card me-2"></i>Pembayaran</h2>
+            <p class="mb-0 opacity-75">Pilih metode pembayaran yang tersedia</p>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Order Summary -->
+                <div class="col-lg-4">
+                    <div class="card" style="position: sticky; top: 100px;">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-receipt me-2"></i>Ringkasan Pesanan</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="orderItems">
+                                <!-- Dynamic items -->
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Subtotal</span>
+                                <span class="fw-bold" id="subtotal">Rp 0</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Biaya Admin</span>
+                                <span class="fw-bold text-success">GRATIS</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <span class="h5">Total Bayar</span>
+                                <span class="h4 text-primary" id="totalBayar">Rp 0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Methods -->
+                <div class="col-lg-8">
+                    <!-- E-Wallet Section -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-wallet me-2"></i>E-Wallet</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-6 col-md-4">
+                                    <div class="payment-method-card" onclick="selectPayment('dana')" id="method-dana">
+                                        <div style="height: 50px; display: flex; align-items: center; justify-content: center;">
+                                            <span style="font-size: 1.8rem; font-weight: 800; color: #0084FF;">DANA</span>
+                                        </div>
+                                        <div class="method-name">DANA</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <div class="payment-method-card" onclick="selectPayment('ovo')" id="method-ovo">
+                                        <div style="height: 50px; display: flex; align-items: center; justify-content: center;">
+                                            <span style="font-size: 1.8rem; font-weight: 800; color: #4B2F9F;">OVO</span>
+                                        </div>
+                                        <div class="method-name">OVO</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <div class="payment-method-card" onclick="selectPayment('gopay')" id="method-gopay">
+                                        <div style="height: 50px; display: flex; align-items: center; justify-content: center;">
+                                            <span style="font-size: 1.5rem; font-weight: 800; color: #00AED6;">GoPay</span>
+                                        </div>
+                                        <div class="method-name">GoPay</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <div class="payment-method-card" onclick="selectPayment('shopeepay')" id="method-shopeepay">
+                                        <div style="height: 50px; display: flex; align-items: center; justify-content: center;">
+                                            <span style="font-size: 1.3rem; font-weight: 800; color: #EE4D2D;">ShopeePay</span>
+                                        </div>
+                                        <div class="method-name">ShopeePay</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <div class="payment-method-card" onclick="selectPayment('linkaja')" id="method-linkaja">
+                                        <div style="height: 50px; display: flex; align-items: center; justify-content: center;">
+                                            <span style="font-size: 1.5rem; font-weight: 800; color: #D81D24;">LinkAja</span>
+                                        </div>
+                                        <div class="method-name">LinkAja</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- QRIS Section -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-qrcode me-2"></i>QRIS</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-12 col-md-6">
+                                    <div class="payment-method-card" onclick="selectPayment('qris')" id="method-qris">
+                                        <div style="height: 50px; display: flex; align-items: center; justify-content: center;">
+                                            <span style="font-size: 1.5rem; font-weight: 800; color: #1A3A8C;"><i class="fas fa-qrcode me-2"></i>QRIS</span>
+                                        </div>
+                                        <div class="method-name">Scan QRIS</div>
+                                        <small class="text-muted">Semua e-wallet & bank</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Transfer Bank Section -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-university me-2"></i>Transfer Bank</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-6 col-md-4">
+                                    <div class="payment-method-card" onclick="selectPayment('bca')" id="method-bca">
+                                        <div style="height: 50px; display: flex; align-items: center; justify-content: center;">
+                                            <span style="font-size: 1.5rem; font-weight: 800; color: #003399;">BCA</span>
+                                        </div>
+                                        <div class="method-name">Bank BCA</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <div class="payment-method-card" onclick="selectPayment('bni')" id="method-bni">
+                                        <div style="height: 50px; display: flex; align-items: center; justify-content: center;">
+                                            <span style="font-size: 1.5rem; font-weight: 800; color: #0066CC;">BNI</span>
+                                        </div>
+                                        <div class="method-name">Bank BNI</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <div class="payment-method-card" onclick="selectPayment('mandiri')" id="method-mandiri">
+                                        <div style="height: 50px; display: flex; align-items: center; justify-content: center;">
+                                            <span style="font-size: 1.3rem; font-weight: 800; color: #FFD700; background: #003399; padding: 5px 15px; border-radius: 5px;">Mandiri</span>
+                                        </div>
+                                        <div class="method-name">Bank Mandiri</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cash Section -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-money-bill-wave me-2"></i>Tunai</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-12 col-md-6">
+                                    <div class="payment-method-card" onclick="selectPayment('cash')" id="method-cash">
+                                        <div style="height: 50px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="fas fa-money-bill-wave" style="font-size: 2.5rem; color: var(--success);"></i>
+                                        </div>
+                                        <div class="method-name">Bayar di Tempat</div>
+                                        <small class="text-muted">Bayar saat ambil pesanan</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Selected Payment Info -->
+                    <div id="selectedPaymentInfo" class="d-none">
+                        <div class="alert alert-info">
+                            <h6><i class="fas fa-info-circle me-2"></i>Metode Pembayaran Terpilih</h6>
+                            <p class="mb-0" id="paymentMethodName">-</p>
+                        </div>
+                    </div>
+
+                    <!-- Pay Button -->
+                    <button onclick="processPayment()" class="btn btn-primary btn-lg w-100" id="btnPay" disabled>
+                        <i class="fas fa-lock me-2"></i>Bayar Sekarang
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Modal -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="paymentModalTitle">Pembayaran</h5>
+                </div>
+                <div class="modal-body text-center">
+                    <div id="paymentContent">
+                        <!-- Dynamic content -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 Kantin Online. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        // Check auth
+        if (!Auth.isLoggedIn()) {
+            window.location.href = 'login.html';
+        }
+        
+        DB.init();
+        const currentUser = Auth.getCurrentUser();
+        
+        let selectedMethod = null;
+        let keranjang = [];
+        let total = 0;
+        
+        // Load keranjang
+        function loadKeranjang() {
+            keranjang = DB.getKeranjang(currentUser.id);
+            
+            if (keranjang.length === 0) {
+                window.location.href = 'keranjang.html';
+                return;
+            }
+            
+            // Render items
+            const container = document.getElementById('orderItems');
+            total = 0;
+            
+            container.innerHTML = keranjang.map(item => {
+                const menu = DB.getMenuById(item.menu_id);
+                const subtotal = menu.harga * item.jumlah;
+                total += subtotal;
+                
+                return `
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <div class="fw-bold">${menu.nama}</div>
+                            <small class="text-muted">${item.jumlah} x ${rupiah(menu.harga)}</small>
+                        </div>
+                        <span class="fw-bold">${rupiah(subtotal)}</span>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('subtotal').textContent = rupiah(total);
+            document.getElementById('totalBayar').textContent = rupiah(total);
+        }
+        
+        // Select payment method
+        function selectPayment(method) {
+            // Remove previous selection
+            document.querySelectorAll('.payment-method-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selection
+            document.getElementById(`method-${method}`).classList.add('selected');
+            selectedMethod = method;
+            
+            // Show info
+            const methodNames = {
+                'dana': 'DANA',
+                'ovo': 'OVO',
+                'gopay': 'GoPay',
+                'shopeepay': 'ShopeePay',
+                'linkaja': 'LinkAja',
+                'qris': 'QRIS',
+                'bca': 'Bank BCA',
+                'bni': 'Bank BNI',
+                'mandiri': 'Bank Mandiri',
+                'cash': 'Bayar di Tempat'
+            };
+            
+            document.getElementById('paymentMethodName').textContent = methodNames[method];
+            document.getElementById('selectedPaymentInfo').classList.remove('d-none');
+            document.getElementById('btnPay').disabled = false;
+        }
+        
+        // Process payment
+        function processPayment() {
+            if (!selectedMethod) {
+                showToast('Pilih metode pembayaran terlebih dahulu!', 'warning');
+                return;
+            }
+            
+            const modal = new bootstrap.Modal(document.getElementById('paymentModal'));
+            const content = document.getElementById('paymentContent');
+            
+            if (selectedMethod === 'cash') {
+                // Cash payment - direct process
+                content.innerHTML = `
+                    <div class="success-animation">
+                        <i class="fas fa-check-circle"></i>
+                        <h4 class="mt-4">Pesanan Berhasil!</h4>
+                        <p class="text-muted">Silakan bayar saat mengambil pesanan di kantin.</p>
+                        <div class="mt-4">
+                            <div class="spinner"></div>
+                        </div>
+                    </div>
+                `;
+                modal.show();
+                
+                setTimeout(() => {
+                    completeOrder('cash');
+                }, 2000);
+                
+            } else if (['dana', 'ovo', 'gopay', 'shopeepay', 'linkaja'].includes(selectedMethod)) {
+                // E-wallet simulation
+                const methodNames = {
+                    'dana': 'DANA',
+                    'ovo': 'OVO',
+                    'gopay': 'GoPay',
+                    'shopeepay': 'ShopeePay',
+                    'linkaja': 'LinkAja'
+                };
+                
+                content.innerHTML = `
+                    <div class="qr-container">
+                        <h5>Scan dengan ${methodNames[selectedMethod]}</h5>
+                        <div class="qr-code">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=KANTINONLINE${Date.now()}" alt="QR Code">
+                        </div>
+                        <div class="payment-timer" id="paymentTimer">05:00</div>
+                        <p class="text-muted">Scan QR code untuk membayar</p>
+                        <button class="btn btn-success w-100 mt-3" onclick="simulateEwalletPayment()">
+                            <i class="fas fa-check me-2"></i>Simulasikan Pembayaran
+                        </button>
+                    </div>
+                `;
+                modal.show();
+                startTimer();
+                
+            } else if (selectedMethod === 'qris') {
+                // QRIS
+                content.innerHTML = `
+                    <div class="qr-container">
+                        <h5>Scan QRIS</h5>
+                        <div class="qr-code">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=QRIS${Date.now()}" alt="QRIS">
+                        </div>
+                        <div class="payment-timer" id="paymentTimer">05:00</div>
+                        <p class="text-muted">Scan dengan aplikasi e-wallet atau bank apapun</p>
+                        <button class="btn btn-success w-100 mt-3" onclick="simulateEwalletPayment()">
+                            <i class="fas fa-check me-2"></i>Simulasikan Pembayaran
+                        </button>
+                    </div>
+                `;
+                modal.show();
+                startTimer();
+                
+            } else {
+                // Bank transfer
+                const bankInfo = {
+                    'bca': { name: 'BCA', rekening: '123-456-7890', atasNama: 'PT Kantin Online' },
+                    'bni': { name: 'BNI', rekening: '098-765-4321', atasNama: 'PT Kantin Online' },
+                    'mandiri': { name: 'Mandiri', rekening: '112-233-4455', atasNama: 'PT Kantin Online' }
+                };
+                
+                const bank = bankInfo[selectedMethod];
+                
+                content.innerHTML = `
+                    <div class="text-start">
+                        <h5 class="text-center mb-4">Transfer ke Bank ${bank.name}</h5>
+                        <div class="alert alert-light border">
+                            <div class="mb-2">
+                                <small class="text-muted">Nomor Rekening</small>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0">${bank.rekening}</h5>
+                                    <button class="btn btn-sm btn-outline-primary" onclick="copyToClipboard('${bank.rekening}')">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <small class="text-muted">Atas Nama</small>
+                                <h6 class="mb-0">${bank.atasNama}</h6>
+                            </div>
+                        </div>
+                        <div class="alert alert-warning">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Transfer sesuai nominal: <strong>${rupiah(total)}</strong>
+                        </div>
+                        <div class="payment-timer" id="paymentTimer">30:00</div>
+                        <button class="btn btn-success w-100" onclick="simulateBankPayment()">
+                            <i class="fas fa-check me-2"></i>Saya Sudah Transfer
+                        </button>
+                    </div>
+                `;
+                modal.show();
+                startTimer(30);
+            }
+        }
+        
+        // Timer
+        let timerInterval;
+        function startTimer(minutes = 5) {
+            let seconds = minutes * 60;
+            const timerEl = document.getElementById('paymentTimer');
+            
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                seconds--;
+                const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+                const s = (seconds % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${m}:${s}`;
+                
+                if (seconds <= 0) {
+                    clearInterval(timerInterval);
+                    timerEl.textContent = 'EXPIRED';
+                }
+            }, 1000);
+        }
+        
+        // Simulate e-wallet payment
+        function simulateEwalletPayment() {
+            clearInterval(timerInterval);
+            const content = document.getElementById('paymentContent');
+            
+            content.innerHTML = `
+                <div class="success-animation">
+                    <i class="fas fa-check-circle"></i>
+                    <h4 class="mt-4">Pembayaran Berhasil!</h4>
+                    <p class="text-muted">Terima kasih telah melakukan pembayaran.</p>
+                    <div class="mt-4">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            `;
+            
+            setTimeout(() => {
+                completeOrder(selectedMethod);
+            }, 2000);
+        }
+        
+        // Simulate bank payment
+        function simulateBankPayment() {
+            clearInterval(timerInterval);
+            const content = document.getElementById('paymentContent');
+            
+            content.innerHTML = `
+                <div class="success-animation">
+                    <i class="fas fa-check-circle"></i>
+                    <h4 class="mt-4">Menunggu Konfirmasi</h4>
+                    <p class="text-muted">Pembayaran Anda sedang diverifikasi.</p>
+                    <div class="mt-4">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            `;
+            
+            setTimeout(() => {
+                completeOrder(selectedMethod);
+            }, 2000);
+        }
+        
+        // Complete order
+        function completeOrder(paymentMethod) {
+            // Create pesanan
+            const pesanan = DB.addPesanan({
+                user_id: currentUser.id,
+                total_harga: total,
+                status: 'diproses',
+                metode_pembayaran: paymentMethod
+            });
+            
+            // Create detail pesanan
+            keranjang.forEach(item => {
+                const menu = DB.getMenuById(item.menu_id);
+                DB.addDetailPesanan({
+                    pesanan_id: pesanan.id,
+                    menu_id: item.menu_id,
+                    jumlah: item.jumlah,
+                    harga_satuan: menu.harga,
+                    subtotal: menu.harga * item.jumlah
+                });
+                
+                // Update stok
+                DB.updateMenu(item.menu_id, { stok: menu.stok - item.jumlah });
+            });
+            
+            // Update saldo if using e-wallet
+            if (['dana', 'ovo', 'gopay', 'shopeepay', 'linkaja', 'qris'].includes(paymentMethod)) {
+                if (currentUser.saldo >= total) {
+                    DB.updateUser(currentUser.id, { saldo: currentUser.saldo - total });
+                    Auth.setCurrentUser({ ...currentUser, saldo: currentUser.saldo - total });
+                }
+            }
+            
+            // Clear keranjang
+            DB.clearKeranjang(currentUser.id);
+            
+            // Redirect to success page
+            window.location.href = `pembayaran-sukses.html?order=${pesanan.id}`;
+        }
+        
+        // Copy to clipboard
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Nomor rekening disalin!');
+            });
+        }
+        
+        function logout() {
+            Auth.logout();
+        }
+        
+        // Initialize
+        loadKeranjang();
+    </script>
+</body>
+</html>
