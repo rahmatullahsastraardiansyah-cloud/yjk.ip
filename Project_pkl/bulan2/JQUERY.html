@@ -1,18 +1,268 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JQUERY</title>
-    <style>
-        body{
-            background: url(../img/);
-            font-family: Arial, sans-serif;
-        }
-        
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Table jQuery + Modal</title>
+
+<!-- JQUERY CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, sans-serif;
+}
+
+body{
+  background:#f4f6f8;
+  padding:30px;
+}
+
+.card{
+  background:#fff;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+button{
+  margin:5px 5px 15px 0;
+  padding:8px 14px;
+  border-radius:8px;
+  border:none;
+  cursor:pointer;
+  background:#000;
+  color:#fff;
+  font-weight:bold;
+}
+
+table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0 8px;
+}
+
+th{
+  background:#000;
+  color:#fff;
+  padding:10px;
+  border-radius:8px;
+}
+
+td{
+  background:#f9f9f9;
+  padding:10px;
+  text-align:center;
+  border-radius:8px;
+}
+
+tr.selected td{
+  background:#00000070;
+  color:#fff;
+}
+
+#info{
+  background:#000;
+  width:260px;
+  color:#fff;
+  text-align:center;
+  border-radius:8px;
+  padding:8px;
+  margin-bottom:10px;
+}
+
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+  justify-content:center;
+  align-items:center;
+}
+
+.modal-content{
+  background:#fff;
+  padding:20px;
+  border-radius:10px;
+  width:300px;
+  text-align:center;
+}
+
+.modal-content input{
+  width:90%;
+  padding:8px;
+  margin:5px 0;
+}
+</style>
 </head>
+
 <body>
-    
+
+<div class="card">
+
+  <button id="btnTambah">Tambah</button>
+  <button id="btnEdit">Edit</button>
+  <button id="btnHapus">Hapus</button>
+  <button id="btnSave">Save</button>
+
+  <div id="info">Tidak ada baris yang dipilih</div>
+
+  <table id="tabel"></table>
+
+</div>
+
+<!-- MODAL -->
+<div id="modalForm" class="modal">
+  <div class="modal-content">
+    <h3 id="modalTitle">Tambah Data</h3>
+
+    <input type="text" id="nama" placeholder="Nama"><br>
+    <input type="number" id="umur" placeholder="Umur"><br>
+    <input type="text" id="sekolah" placeholder="Sekolah"><br>
+    <input type="text" id="tahun" placeholder="Tahun Ajaran"><br><br>
+
+    <button id="simpanData">Simpan</button>
+    <button id="batal">Batal</button>
+  </div>
+</div>
+
+<script>
+$(document).ready(function(){
+
+let data = [
+  { nama:"Rahmatullah Sastra Ardiansyah", umur:17, sekolah:"SMK KRIAN 1 SIDOARJO", tahun:"2024 - 2027"},
+  { nama:"Mamats", umur:16, sekolah:"SMK KRIAN 1 SIDOARJO", tahun:"2024 - 2027"},
+  { nama:"RPL", umur:15, sekolah:"SMK KRIAN 1 SIDOARJO", tahun:"2024 - 2027"},
+  { nama:"yjk", umur:14, sekolah:"SMPN 1 KRIAN", tahun:"2024 - 2027"}
+];
+
+let indexDipilih = null;
+let mode = "tambah";
+
+// RENDER TABLE
+function render(){
+  let html = `
+    <tr>
+      <th>Nama</th>
+      <th>Umur</th>
+      <th>Sekolah</th>
+      <th>Tahun Ajaran</th>
+    </tr>
+  `;
+
+  $.each(data,function(index,item){
+    html += `
+      <tr data-index="${index}">
+        <td>${item.nama}</td>
+        <td>${item.umur}</td>
+        <td>${item.sekolah}</td>
+        <td>${item.tahun}</td>
+      </tr>
+    `;
+  });
+
+  $("#tabel").html(html);
+}
+
+// PILIH BARIS
+$("#tabel").on("click","tr",function(){
+  $("#tabel tr").removeClass("selected");
+  $(this).addClass("selected");
+  indexDipilih = $(this).data("index");
+  $("#info").text("Baris dipilih");
+});
+
+// TAMBAH
+$("#btnTambah").click(function(){
+  mode="tambah";
+  $("#modalTitle").text("Tambah Data");
+  $("input").val("");
+  $("#modalForm").css("display","flex");
+});
+
+// EDIT
+$("#btnEdit").click(function(){
+  if(indexDipilih===null){
+    alert("Pilih baris dulu!");
+    return;
+  }
+
+  mode="edit";
+  $("#modalTitle").text("Edit Data");
+
+  let item=data[indexDipilih];
+  $("#nama").val(item.nama);
+  $("#umur").val(item.umur);
+  $("#sekolah").val(item.sekolah);
+  $("#tahun").val(item.tahun);
+
+  $("#modalForm").css("display","flex");
+});
+
+// SIMPAN
+$("#simpanData").click(function(){
+
+  let nama=$("#nama").val();
+  let umur=$("#umur").val();
+  let sekolah=$("#sekolah").val();
+  let tahun=$("#tahun").val();
+
+  if(!nama || !umur || !sekolah || !tahun){
+    alert("Isi semua data!");
+    return;
+  }
+
+  if(mode==="tambah"){
+    data.push({
+      nama:nama,
+      umur:parseInt(umur),
+      sekolah:sekolah,
+      tahun:tahun
+    });
+  }else{
+    data[indexDipilih]={
+      nama:nama,
+      umur:parseInt(umur),
+      sekolah:sekolah,
+      tahun:tahun
+    };
+  }
+
+  $("#modalForm").hide();
+  render();
+});
+
+// HAPUS
+$("#btnHapus").click(function(){
+  if(indexDipilih===null){
+    alert("Pilih baris dulu!");
+    return;
+  }
+
+  data.splice(indexDipilih,1);
+  indexDipilih=null;
+  $("#info").text("Tidak ada baris yang dipilih");
+  render();
+});
+
+// SAVE
+$("#btnSave").click(function(){
+  alert("Data berhasil disimpan (simulasi)");
+});
+
+// BATAL
+$("#batal").click(function(){
+  $("#modalForm").hide();
+});
+
+render();
+
+});
+</script>
+
 </body>
 </html>
