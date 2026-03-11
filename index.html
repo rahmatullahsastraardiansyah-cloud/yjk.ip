@@ -4,427 +4,248 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Bootstrap AI Builder</title>
+<title>Bootstrap AI Builder - Redesigned</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
 <style>
-
+/* ---------- GENERAL ---------- */
 body{
-background:#0f0f0f;
-color:white;
-font-family:Arial;
+    background:#121212;
+    color:#eee;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin:0;
+    padding:0;
+}
+h5,h6{
+    margin-bottom:10px;
 }
 
+/* ---------- HEADER ---------- */
 .header{
-background:#000;
-padding:10px;
-border-bottom:2px solid #333;
+    background:#1f1f1f;
+    padding:12px 20px;
+    border-bottom:2px solid #333;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.header h5{
+    font-weight:bold;
+    color:#00ff9c;
+}
+.header button{
+    margin-left:5px;
 }
 
+/* ---------- SIDEBAR ---------- */
 .sidebar{
-background:#1b1b1b;
-height:100vh;
-overflow:auto;
-padding:15px;
+    background:#1a1a1a;
+    height:100vh;
+    overflow-y:auto;
+    padding:20px 10px;
+    border-right:2px solid #333;
 }
-
+.sidebar h6{
+    color:#00ff9c;
+}
 .sidebar button{
-width:100%;
-margin-bottom:8px;
+    width:100%;
+    margin-bottom:10px;
+    font-weight:500;
+    text-align:left;
+    transition:0.3s;
+}
+.sidebar button:hover{
+    transform:scale(1.02);
 }
 
+/* ---------- CODE EDITOR ---------- */
 textarea{
-width:100%;
-height:40vh;
-background:#111;
-color:#00ff9c;
-border:none;
-padding:10px;
-font-family:monospace;
+    width:100%;
+    height:60vh;
+    background:#1b1b1b;
+    color:#00ff9c;
+    border:none;
+    padding:12px;
+    font-family:monospace;
+    font-size:14px;
+    border-radius:5px;
+    resize:none;
+}
+textarea:focus{
+    outline:none;
 }
 
+/* ---------- PREVIEW ---------- */
 iframe{
-background:white;
-height:50vh;
-border:none;
+    background:white;
+    height:60vh;
+    border-radius:6px;
+    border:2px solid #333;
 }
 
+/* ---------- DEVICE BUTTONS ---------- */
 .device button{
-margin-right:5px;
+    margin-right:5px;
 }
 
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:768px){
+    .sidebar{
+        height:auto;
+    }
+    textarea, iframe{
+        height:40vh;
+    }
+}
 </style>
 </head>
 
 <body>
 
-<div class="header d-flex justify-content-between">
-
-<h5>Builder</h5>
-
-<div>
-<button class="btn btn-success" onclick="run()">Run</button>
-<button class="btn btn-info" onclick="exportHTML()">Export HTML</button>
-<button class="btn btn-warning" onclick="saveProject()">Save</button>
-<button class="btn btn-secondary" onclick="importProject()">Import</button>
-<button class="btn btn-danger" onclick="resetPage()">Reset</button>
-<button class="btn btn-light" onclick="toggleMode()">Dark/Light</button>
-</div>
-
+<div class="header">
+    <h5><i class="fas fa-code"></i> AI Builder</h5>
+    <div>
+        <button class="btn btn-success btn-sm" onclick="run()"><i class="fas fa-play"></i> Run</button>
+        <button class="btn btn-info btn-sm" onclick="exportHTML()"><i class="fas fa-file-export"></i> Export</button>
+        <button class="btn btn-warning btn-sm" onclick="saveProject()"><i class="fas fa-save"></i> Save</button>
+        <button class="btn btn-secondary btn-sm" onclick="importProject()"><i class="fas fa-file-import"></i> Import</button>
+        <button class="btn btn-danger btn-sm" onclick="resetPage()"><i class="fas fa-eraser"></i> Reset</button>
+        <button class="btn btn-light btn-sm text-dark" onclick="toggleMode()"><i class="fas fa-adjust"></i> Mode</button>
+    </div>
 </div>
 
 <div class="container-fluid">
+    <div class="row">
+        <!-- SIDEBAR -->
+        <div class="col-md-2 sidebar">
+            <h6>Components</h6>
+            <button class="btn btn-primary" onclick="add('button')"><i class="fas fa-square"></i> Button</button>
+            <button class="btn btn-success" onclick="add('card')"><i class="fas fa-id-card"></i> Card</button>
+            <button class="btn btn-warning" onclick="add('alert')"><i class="fas fa-bell"></i> Alert</button>
+            <button class="btn btn-info" onclick="add('navbar')"><i class="fas fa-bars"></i> Navbar</button>
+            <button class="btn btn-secondary" onclick="add('form')"><i class="fas fa-pen"></i> Form</button>
+            <button class="btn btn-dark" onclick="add('grid')"><i class="fas fa-th"></i> Grid</button>
+            <button class="btn btn-dark" onclick="add('modal')"><i class="fas fa-window-maximize"></i> Modal</button>
+            <button class="btn btn-dark" onclick="add('badge')"><i class="fas fa-circle"></i> Badge</button>
+            <button class="btn btn-dark" onclick="add('spinner')"><i class="fas fa-spinner fa-spin"></i> Spinner</button>
+            <button class="btn btn-dark" onclick="add('list')"><i class="fas fa-list"></i> List</button>
+            <button class="btn btn-dark" onclick="add('image')"><i class="fas fa-image"></i> Image</button>
 
-<div class="row">
+            <hr>
+            <h6>Generator</h6>
+            <button class="btn btn-light text-dark" onclick="aiLanding()"><i class="fas fa-rocket"></i> Landing Page</button>
+            <button class="btn btn-light text-dark" onclick="aiPortfolio()"><i class="fas fa-briefcase"></i> Portfolio</button>
+            <button class="btn btn-light text-dark" onclick="aiStore()"><i class="fas fa-store"></i> Store Page</button>
+            <button class="btn btn-light text-dark" onclick="aiLogin()"><i class="fas fa-user"></i> Login Form</button>
+            <button class="btn btn-light text-dark" onclick="aiTopbar()"><i class="fas fa-bars"></i> Top Navbar</button>
+        </div>
 
-<div class="col-md-2 sidebar">
+        <!-- MAIN -->
+        <div class="col-md-10 p-3">
+            <div class="device mb-2">
+                Preview:
+                <button class="btn btn-outline-light btn-sm" onclick="device('100%')">Desktop</button>
+                <button class="btn btn-outline-light btn-sm" onclick="device('768px')">Tablet</button>
+                <button class="btn btn-outline-light btn-sm" onclick="device('375px')">Mobile</button>
+            </div>
 
-<h6>Components</h6>
-
-<button class="btn btn-primary" onclick="add('button')">Button</button>
-<button class="btn btn-success" onclick="add('card')">Card</button>
-<button class="btn btn-warning" onclick="add('alert')">Alert</button>
-<button class="btn btn-info" onclick="add('navbar')">Navbar</button>
-<button class="btn btn-secondary" onclick="add('form')">Form</button>
-<button class="btn btn-dark" onclick="add('grid')">Grid</button>
-<button class="btn btn-dark" onclick="add('modal')">Modal</button>
-<button class="btn btn-dark" onclick="add('badge')">Badge</button>
-<button class="btn btn-dark" onclick="add('spinner')">Spinner</button>
-<button class="btn btn-dark" onclick="add('list')">List Group</button>
-<button class="btn btn-dark" onclick="add('image')">Image</button>
-
-<hr>
-
-<h6> Generator</h6>
-
-<button class="btn btn-light text-dark" onclick="aiLanding()">Landing Page</button>
-<button class="btn btn-light text-dark" onclick="aiPortfolio()">Portfolio</button>
-<button class="btn btn-light text-dark" onclick="aiStore()">Store Page</button>
-<button class="btn btn-light text-dark" onclick="aiLogin()">Login Form</button>
-<button class="btn btn-light text-dark" onclick="aiTopbar()">Top Navbar</button>
-
-</div>
-
-<div class="col-md-10">
-
-<div class="device p-2">
-
-Preview:
-
-<button class="btn btn-outline-light btn-sm" onclick="device('100%')">Desktop</button>
-<button class="btn btn-outline-light btn-sm" onclick="device('768px')">Tablet</button>
-<button class="btn btn-outline-light btn-sm" onclick="device('375px')">Mobile</button>
-
-</div>
-
-<div class="row">
-
-<div class="col-md-6">
-
-<h6>Code Editor</h6>
-<textarea id="code"></textarea>
-
-</div>
-
-<div class="col-md-6">
-
-<h6>Preview</h6>
-<iframe id="preview" class="w-100"></iframe>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <h6>Code Editor</h6>
+                    <textarea id="code"></textarea>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <h6>Preview</h6>
+                    <iframe id="preview" class="w-100"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-
+// ---------- COMPONENT ADD ----------
 function add(type){
-
-let code=document.getElementById("code")
-let html=""
-
-if(type==="button"){
-html=`<button class="btn btn-primary m-2">Button</button>`
+    let code=document.getElementById("code")
+    let html=""
+    switch(type){
+        case "button": html=`<button class="btn btn-primary m-2">Button</button>`; break;
+        case "card": html=`<div class="card m-3" style="width:18rem"><div class="card-body"><h5 class="card-title">Card</h5><p>Example card</p><button class="btn btn-primary">Go</button></div></div>`; break;
+        case "alert": html=`<div class="alert alert-success">Alert message</div>`; break;
+        case "navbar": html=`<nav class="navbar navbar-expand-lg navbar-dark bg-dark"><div class="container-fluid"><a class="navbar-brand">Navbar</a><button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="nav"><ul class="navbar-nav ms-auto"><li class="nav-item"><a class="nav-link">Home</a></li><li class="nav-item"><a class="nav-link">About</a></li></ul></div></div></nav>`; break;
+        case "form": html=`<div class="p-3"><input class="form-control mb-2" placeholder="Nama"><input class="form-control mb-2" placeholder="Email"><button class="btn btn-primary">Submit</button></div>`; break;
+        case "grid": html=`<div class="container"><div class="row"><div class="col-md-4 bg-primary text-white p-3">Col</div><div class="col-md-4 bg-success text-white p-3">Col</div><div class="col-md-4 bg-danger text-white p-3">Col</div></div></div>`; break;
+        case "modal": html=`<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Open Modal</button><div class="modal fade" id="myModal"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Modal</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body">Hello modal</div></div></div></div>`; break;
+        case "badge": html=`<h4>Notification <span class="badge bg-danger">4</span></h4>`; break;
+        case "spinner": html=`<div class="spinner-border text-primary"></div>`; break;
+        case "list": html=`<ul class="list-group"><li class="list-group-item">Item 1</li><li class="list-group-item">Item 2</li><li class="list-group-item">Item 3</li></ul>`; break;
+        case "image": html=`<img src="https://picsum.photos/600/300" class="img-fluid rounded">`; break;
+    }
+    code.value+=html
+    run()
 }
 
-if(type==="card"){
-html=`
-<div class="card m-3" style="width:18rem">
-<div class="card-body">
-<h5 class="card-title">Card</h5>
-<p>Example card</p>
-<button class="btn btn-primary">Go</button>
-</div>
-</div>`
-}
+// ---------- AI GENERATORS ----------
+function aiLanding(){document.getElementById("code").value=`<div class="container text-center mt-5"><h1>Welcome</h1><p>Landing Page</p><button class="btn btn-primary">Get Started</button></div>`; run();}
+function aiPortfolio(){document.getElementById("code").value=`<div class="container mt-5"><h1 class="text-center">Portfolio</h1><div class="row"><div class="col-md-4"><div class="card"><div class="card-body">Project</div></div></div><div class="col-md-4"><div class="card"><div class="card-body">Project</div></div></div></div></div>`; run();}
+function aiStore(){document.getElementById("code").value=`<div class="container mt-5"><h1>Store</h1><div class="card p-3"><h5>Product</h5><p>$10</p><button class="btn btn-success">Buy</button></div></div>`; run();}
+function aiLogin(){document.getElementById("code").value=`<div class="container d-flex justify-content-center align-items-center" style="height:80vh"><div class="card p-4" style="width:350px"><h4 class="text-center">Login</h4><input class="form-control mb-2" placeholder="Username"><input type="password" class="form-control mb-3" placeholder="Password"><button class="btn btn-primary w-100">Login</button></div></div>`; run();}
+function aiTopbar(){document.getElementById("code").value=`<nav class="navbar navbar-expand-lg navbar-dark bg-dark"><div class="container"><a class="navbar-brand">MySite</a><button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="nav"><ul class="navbar-nav ms-auto"><li class="nav-item"><a class="nav-link">Home</a></li><li class="nav-item"><a class="nav-link">Contact</a></li></ul></div></div></nav>`; run();}
 
-if(type==="alert"){
-html=`<div class="alert alert-success">Alert message</div>`
-}
-
-if(type==="navbar"){
-html=`
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-<div class="container-fluid">
-<a class="navbar-brand">Navbar</a>
-<button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
-<span class="navbar-toggler-icon"></span>
-</button>
-<div class="collapse navbar-collapse" id="nav">
-<ul class="navbar-nav ms-auto">
-<li class="nav-item"><a class="nav-link">Home</a></li>
-<li class="nav-item"><a class="nav-link">About</a></li>
-</ul>
-</div>
-</div>
-</nav>`
-}
-
-if(type==="form"){
-html=`
-<div class="p-3">
-<input class="form-control mb-2" placeholder="Nama">
-<input class="form-control mb-2" placeholder="Email">
-<button class="btn btn-primary">Submit</button>
-</div>`
-}
-
-if(type==="grid"){
-html=`
-<div class="container">
-<div class="row">
-<div class="col-md-4 bg-primary text-white p-3">Col</div>
-<div class="col-md-4 bg-success text-white p-3">Col</div>
-<div class="col-md-4 bg-danger text-white p-3">Col</div>
-</div>
-</div>`
-}
-
-if(type==="modal"){
-html=`
-<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Open Modal</button>
-
-<div class="modal fade" id="myModal">
-<div class="modal-dialog">
-<div class="modal-content">
-
-<div class="modal-header">
-<h5 class="modal-title">Modal</h5>
-<button class="btn-close" data-bs-dismiss="modal"></button>
-</div>
-
-<div class="modal-body">
-Hello modal
-</div>
-
-</div>
-</div>
-</div>`
-}
-
-if(type==="badge"){
-html=`<h4>Notification <span class="badge bg-danger">4</span></h4>`
-}
-
-if(type==="spinner"){
-html=`<div class="spinner-border text-primary"></div>`
-}
-
-if(type==="list"){
-html=`
-<ul class="list-group">
-<li class="list-group-item">Item 1</li>
-<li class="list-group-item">Item 2</li>
-<li class="list-group-item">Item 3</li>
-</ul>`
-}
-
-if(type==="image"){
-html=`<img src="https://picsum.photos/600/300" class="img-fluid rounded">`
-}
-
-code.value+=html
-run()
-
-}
-
-function aiLanding(){
-document.getElementById("code").value=`
-<div class="container text-center mt-5">
-<h1>Welcome</h1>
-<p>Landing Page</p>
-<button class="btn btn-primary">Get Started</button>
-</div>`
-run()
-}
-
-function aiPortfolio(){
-document.getElementById("code").value=`
-<div class="container mt-5">
-<h1 class="text-center">Portfolio</h1>
-<div class="row">
-<div class="col-md-4"><div class="card"><div class="card-body">Project</div></div></div>
-<div class="col-md-4"><div class="card"><div class="card-body">Project</div></div></div>
-</div>
-</div>`
-run()
-}
-
-function aiStore(){
-document.getElementById("code").value=`
-<div class="container mt-5">
-<h1>Store</h1>
-<div class="card p-3">
-<h5>Product</h5>
-<p>$10</p>
-<button class="btn btn-success">Buy</button>
-</div>
-</div>`
-run()
-}
-
-function aiLogin(){
-document.getElementById("code").value=`
-<div class="container d-flex justify-content-center align-items-center" style="height:80vh">
-<div class="card p-4" style="width:350px">
-<h4 class="text-center">Login</h4>
-<input class="form-control mb-2" placeholder="Username">
-<input type="password" class="form-control mb-3" placeholder="Password">
-<button class="btn btn-primary w-100">Login</button>
-</div>
-</div>`
-run()
-}
-
-function aiTopbar(){
-document.getElementById("code").value=`
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-<div class="container">
-<a class="navbar-brand">MySite</a>
-<button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
-<span class="navbar-toggler-icon"></span>
-</button>
-<div class="collapse navbar-collapse" id="nav">
-<ul class="navbar-nav ms-auto">
-<li class="nav-item"><a class="nav-link">Home</a></li>
-<li class="nav-item"><a class="nav-link">Contact</a></li>
-</ul>
-</div>
-</div>
-</nav>`
-run()
-}
-
+// ---------- RUN PREVIEW ----------
 function run(){
-
-let code=document.getElementById("code").value
-let preview=document.getElementById("preview").contentWindow.document
-
-preview.open()
-
-preview.write(`
-<html>
-<head>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"><\/script>
-</head>
-<body>
-${code}
-</body>
-</html>
-`)
-
-preview.close()
-
+    let code=document.getElementById("code").value
+    let preview=document.getElementById("preview").contentWindow.document
+    preview.open()
+    preview.write(`<html><head><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"><\/script></head><body>${code}</body></html>`)
+    preview.close()
 }
 
+// ---------- EXPORT / SAVE ----------
 function exportHTML(){
-
-let code=document.getElementById("code").value
-
-let html=`<!DOCTYPE html>
-<html>
-<head>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"><\/script>
-</head>
-<body>
-${code}
-</body>
-</html>`
-
-let blob=new Blob([html],{type:"text/html"})
-let a=document.createElement("a")
-a.href=URL.createObjectURL(blob)
-a.download="bootstrap-site.html"
-a.click()
-
+    let code=document.getElementById("code").value
+    let html=`<!DOCTYPE html><html><head><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"><\/script></head><body>${code}</body></html>`
+    let blob=new Blob([html],{type:"text/html"})
+    let a=document.createElement("a")
+    a.href=URL.createObjectURL(blob)
+    a.download="bootstrap-site.html"
+    a.click()
 }
-
 function saveProject(){
-
-let code=document.getElementById("code").value
-let blob=new Blob([code])
-let a=document.createElement("a")
-a.href=URL.createObjectURL(blob)
-a.download="project.txt"
-a.click()
-
+    let code=document.getElementById("code").value
+    let blob=new Blob([code])
+    let a=document.createElement("a")
+    a.href=URL.createObjectURL(blob)
+    a.download="project.txt"
+    a.click()
 }
-
 function importProject(){
-
-let input=document.createElement("input")
-input.type="file"
-
-input.onchange=e=>{
-
-let reader=new FileReader()
-
-reader.onload=function(){
-document.getElementById("code").value=this.result
-run()
+    let input=document.createElement("input")
+    input.type="file"
+    input.onchange=e=>{
+        let reader=new FileReader()
+        reader.onload=function(){document.getElementById("code").value=this.result; run()}
+        reader.readAsText(e.target.files[0])
+    }
+    input.click()
 }
 
-reader.readAsText(e.target.files[0])
-
-}
-
-input.click()
-
-}
-
-function resetPage(){
-document.getElementById("code").value=""
-run()
-}
-
-function device(size){
-document.getElementById("preview").style.width=size
-}
-
+// ---------- UTILITY ----------
+function resetPage(){document.getElementById("code").value=""; run();}
+function device(size){document.getElementById("preview").style.width=size;}
 function toggleMode(){
-
-let body=document.body
-
-if(body.style.background=="white"){
-body.style.background="#0f0f0f"
-body.style.color="white"
-}else{
-body.style.background="white"
-body.style.color="black"
-}
-
+    let body=document.body
+    if(body.style.background=="white"){
+        body.style.background="#121212"; body.style.color="#eee";
+    }else{
+        body.style.background="white"; body.style.color="#121212";
+    }
 }
 
 run()
-
 </script>
 
 </body>
